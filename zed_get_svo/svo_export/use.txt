@@ -1,0 +1,20 @@
+导出成avi视频、导出成图像序列(需提前创建好文件夹) 两种形式
+# mode 0
+Export .svo file to LEFT+RIGHT .avi
+python export_svo.py --mode 0 --input_svo_file <input_svo_file> --output_avi_file <output_avi_file> 
+
+# mode 1
+Export .svo file to LEFT+DEPTH_VIEW .avi
+python export_svo.py --mode 1 --input_svo_file <input_svo_file> --output_avi_file <output_avi_file>
+
+# mode 2
+Export .svo file to LEFT+RIGHT image sequence
+python export_svo.py --mode 2 --input_svo_file <input_svo_file> --output_path_dir <output_path_dir> 
+
+# mode 3
+Export .svo file to LEFT+DEPTH_View image sequence
+python export_svo.py --mode 3 --input_svo_file <input_svo_file> --output_path_dir <output_path_dir> 
+
+# mode 4
+Export .svo file to LEFT+DEPTH_16BIT image sequence
+python export_svo.py --mode 4 --input_svo_file <input_svo_file> --output_path_dir <output_path_dir> 

@@ -1,0 +1,3 @@
+ 调节文件中相机分辨率
+ python zed_get_svo.py --output_svo_file test.svo
+ use Ctrl-C to stop.
