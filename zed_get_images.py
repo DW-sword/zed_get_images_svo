@@ -20,7 +20,7 @@ def main(cnt_max,mode):
     cnt = 0
     while True:
         img_l = sl.Mat()
-        img_s = sl.Mat()
+        img_r = sl.Mat()
         depth = sl.Mat()
         if zed.grab(runtime_parameters) == sl.ERROR_CODE.SUCCESS:
 
@@ -31,30 +31,44 @@ def main(cnt_max,mode):
             img_r_bgr = img_r.get_data()[:,:,:-1]
 
             zed.retrieve_measure(depth, sl.MEASURE.DEPTH)
-            depth_data = depth.get_data() # mm单位
-            h,w = depth_data.shape[0],depth_data.shape[1]
-            for i in range(h):
-                for j in range(w):
-                    if np.isnan(depth_data[i,j]) or np.isinf(depth_data[i,j]):
-                        depth_data[i,j] = 0
-            depth_save = depth_data.astype(np.float32)
+            
             
             cv.imshow('img',img_l_bgr)
             # cv.imshow('img_pair',np.hstack((img_l_bgr,img_r_bgr)))
             key = cv.waitKey(1)
 
-            save_path = ''
+            save_path = '/home/lvpin/Desktop/code/zed_get_images_svo/1'
             #连续保存图片
             if mode == 0:
                 cv.imwrite(save_path+'/L/{}.png'.format(cnt),img_l_bgr)
+
                 cv.imwrite(save_path+'/R/{}.png'.format(cnt),img_r_bgr)
+
+                depth_data = depth.get_data() # mm单位
+                h,w = depth_data.shape[0],depth_data.shape[1]
+                for i in range(h):
+                    for j in range(w):
+                        if np.isnan(depth_data[i,j]) or np.isinf(depth_data[i,j]):
+                            depth_data[i,j] = 0
+                depth_save = depth_data.astype(np.float32)
                 cv.imwrite(save_path+'/depth/{}.tiff'.format(cnt),depth_save) # cv.imread(save_path,cv.IMREAD_ANYDEPTH)
+
                 cnt += 1
             elif mode == 1:
                 if key == ord('s'):
                     cv.imwrite(save_path+'/L/{}.png'.format(cnt),img_l_bgr)
+
                     cv.imwrite(save_path+'/R/{}.png'.format(cnt),img_r_bgr)
+
+                    depth_data = depth.get_data() # mm单位
+                    h,w = depth_data.shape[0],depth_data.shape[1]
+                    for i in range(h):
+                        for j in range(w):
+                            if np.isnan(depth_data[i,j]) or np.isinf(depth_data[i,j]):
+                                depth_data[i,j] = 0
+                    depth_save = depth_data.astype(np.float32)
                     cv.imwrite(save_path+'/depth/{}.tiff'.format(cnt),depth_save)
+
                     cnt += 1
             else:
                 print('mode error')
