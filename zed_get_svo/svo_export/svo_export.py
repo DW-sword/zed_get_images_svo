@@ -25,13 +25,19 @@ import cv2
 from pathlib import Path
 import enum
 import argparse
-import os 
+import os
+import time
 
 class AppType(enum.Enum):
     LEFT_AND_RIGHT = 1
     LEFT_AND_DEPTH = 2
     LEFT_AND_DEPTH_16 = 3
 
+def record_timestamp(data,save_path):
+    timestamp = data 
+    with open(save_path,'a') as file_handle:
+        file_handle.write(time.strftime("%Y-%m-%d %H:%M:%S \n", timestamp))                
+        file_handle.close()
 
 def progress_bar(percent_done, bar_length=50):
     #Display a progress bar
@@ -116,6 +122,10 @@ def main():
         err = zed.grab(rt_param)
         if err == sl.ERROR_CODE.SUCCESS:
             svo_position = zed.get_svo_position()
+
+            # get timestamp
+            timestamp = time.localtime(zed.get_timestamp(sl.TIME_REFERENCE.IMAGE).data_ns/(10**9))
+            record_timestamp(timestamp,save_path='/home/lvpin/Desktop/code/zed_get_images_svo/svo/timestamp.txt')
 
             # Retrieve SVO images
             zed.retrieve_image(left_image, sl.VIEW.LEFT)

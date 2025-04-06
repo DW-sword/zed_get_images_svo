@@ -1,4 +1,4 @@
-导出成avi视频、导出成图像序列(需提前创建好文件夹) 两种形式
+导出成avi视频、导出成图像序列(需提前创建好文件夹) 两种形式,还可以导出时间戳文件
 # mode 0
 Export .svo file to LEFT+RIGHT .avi
 python svo_export.py --mode 0 --input_svo_file <input_svo_file> --output_avi_file <output_avi_file> 
